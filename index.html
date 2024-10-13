@@ -194,9 +194,10 @@
         .modal-content {
             background-color: #fefefe;
             margin: 5% auto;
-            padding: 20px;
+            padding: 0;
             border: 1px solid #888;
-            width: 50%;
+            width: 90%;
+            height: 90%;
             position: relative;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
@@ -218,6 +219,13 @@
             color: black;
             text-decoration: none;
             cursor: pointer;
+        }
+
+        .modal-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 10px;
         }
 
         @keyframes fadeIn {
@@ -247,7 +255,7 @@
             <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/CambioImagen/')">
                 <hr>
                 CambioImagen</a></div>
-            <div class="card"><a href="https://l21660166.github.io/ContadorPalabras/">ContadorPalabras</a></div>
+            <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/ContadorPalabras/')">ContadorPalabras</a></div>
             <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/ContadorArribaAbajo/')">
                 <img src="img/arribaabajo.png" alt="">
                 <hr>
@@ -260,7 +268,7 @@
                 <img src="img/cronometro.png" alt="">
                 <hr>
                 Cronometro</a></div>
-            <div class="card"><a href="https://l21660166.github.io/FiltroBusqueda">
+            <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/FiltroBusqueda/')">
                 <img src="img/buscar.png" alt="">
                 <hr>
                 FiltroBusqueda</a></div>
@@ -304,7 +312,7 @@
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <iframe id="modal-iframe" src="" width="100%" height="300px"></iframe>
+            <iframe id="modal-iframe" class="modal-iframe" src=""></iframe>
         </div>
     </div>
 
