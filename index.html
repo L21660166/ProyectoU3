@@ -1,314 +1,144 @@
 <!DOCTYPE html>
-<html lang="es"></html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Enlace a la hoja de estilo de Font Awesome para los íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Enlace a la hoja de estilos personalizada -->
+    <link rel="stylesheet" href="styles.css">
     <title>Dashboard Responsivo</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
-            position: relative;
-            overflow: auto; /* Cambiado de hidden a auto */
-            margin: 0;
-            padding: 0;
-        }
-
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            filter: blur(8px);
-            z-index: -1;
-        }
-
-        .particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 150%;
-            pointer-events: none;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 20%, transparent 20%, transparent 80%, rgba(255, 255, 255, 0.2) 80%);
-            background-size: 10px 10px;
-            animation: moveParticles 20s linear infinite;
-        }
-
-        @keyframes moveParticles {
-            from { background-position: 0 0; }
-            to { background-position: 300px 300px; }
-        }
-
-        .toolbar {
-            background-color: #111;
-            color: white;
-            padding: 10px 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1;
-        }
-
-        .toolbar .hamburger {
-            font-size: 30px;
-            cursor: pointer;
-            color: white;
-            position: absolute;
-            left: 15px;
-        }
-
-        .toolbar .title {
-            font-size: 24px;
-        }
-
-        .sidebar {
-            height: 100%;
-            width: 60px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: #111;
-            padding-top: 60px;
-            transition: 0.3s;
-            overflow-x: hidden;
-        }
-
-        .sidebar a {
-            padding: 10px 15px;
-            text-decoration: none;
-            font-size: 18px;
-            color: white;
-            display: flex;
-            align-items: center;
-            transition: 0.3s;
-        }
-
-        .sidebar a i {
-            margin-right: 10px;
-        }
-
-        .sidebar a span {
-            display: none;
-        }
-
-        .sidebar a:hover {
-            background-color: #575757;
-        }
-
-        .main-content {
-            margin-left: 60px;
-            padding: 20px;
-            transition: margin-left 0.3s;
-            padding-top: 100px;
-        }
-
-        @media screen and (max-width: 768px) {
-            .sidebar {
-                width: 0;
-            }
-            .main-content {
-                margin-left: 0;
-            }
-        }
-
-        .card-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .card {
-            background-color: #dddcdc;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            width: calc(33.333% - 30px);
-            box-sizing: border-box;
-            text-align: center;
-            transition: transform 0.3s;
-        }
-
-        .card:hover {
-            transform: scale(1.05);
-        }
-
-        .card a {
-            text-decoration: none;
-            color: #333;
-            font-size: 18px;
-        }
-
-        .card img {
-            max-width: 40%; /* Ajusta el tamaño de las imágenes */
-            height: auto;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-
-        @media screen and (max-width: 1024px) {
-            .card {
-                width: calc(50% - 40px);
-            }
-        }
-
-        @media screen and (max-width: 768px) {
-            .card {
-                width: calc(100% - 40px);
-            }
-        }
-
-        .sidebar.open {
-            width: 250px;
-        }
-
-        .sidebar.open a span {
-            display: inline;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 2;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.6);
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto;
-            padding: 0;
-            border: 1px solid #888;
-            width: 90%;
-            height: 90%;
-            position: relative;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            animation: fadeIn 0.5s;
-        }
-
-        .close {
-            color: #aaa;
-            position: absolute;
-            top: 10px;
-            right: 25px;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .modal-iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: 10px;
-        }
-
-        @keyframes fadeIn {
-            from {opacity: 0;}
-            to {opacity: 1;}
-        }
-    </style>
 </head>
 <body>
+    <!-- Contenedor para efectos de partículas en el fondo -->
     <div class="particles"></div>
+    
+    <!-- Barra de herramientas superior con el título y el botón de menú -->
     <div class="toolbar">
         <span class="hamburger" onclick="toggleSidebar()">&#9776;</span>
-        <span class="title">Dashboard</span>
+        <span class="title" id="dashboard-title">Inicio</span>
     </div>
+
+    <!-- Barra lateral de navegación con enlaces a las diferentes secciones -->
     <div class="sidebar" id="sidebar">
-        <a href="home.html" target="content-frame"><i class="fas fa-home"></i><span>Home</span></a>
-        <a href="services.html" target="content-frame"><i class="fas fa-concierge-bell"></i><span>Services</span></a>
-        <a href="clients.html" target="content-frame"><i class="fas fa-users"></i><span>Clients</span></a>
-        <a href="contact.html" target="content-frame"><i class="fas fa-envelope"></i><span>Contact</span></a>
+        <a href="#" onclick="showSection('home')"><i class="fas fa-home"></i><span>Inicio</span></a>
+        <a href="#" onclick="showSection('services')"><i class="fas fa-concierge-bell"></i><span>Servicios</span></a>
+        <a href="#" onclick="showSection('about')"><i class="fas fa-users"></i><span>Sobre Mi</span></a>
+        <a href="#" onclick="showSection('contact')"><i class="fas fa-envelope"></i><span>Contacto</span></a>
     </div>
+
+    <!-- Contenedor principal que alberga las secciones del dashboard -->
     <div class="main-content" id="main-content">
-        <div class="card-container">
-            <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/Calculadora/')">
-                <img src="img/suma.png" alt="">
-                <hr>
-                Calculadora</a></div>
-            <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/CambioImagen/')">
-                <hr>
-                CambioImagen</a></div>
-            <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/ContadorPalabras/')">ContadorPalabras</a></div>
-            <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/ContadorArribaAbajo/')">
-                <img src="img/arribaabajo.png" alt="">
-                <hr>
-                ContadorArribaAbajo</a></div>
-            <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/ConvertidorUnidades/')">
-                <img src="img/regla.png" alt="">
-                <hr>
-                Convertidor</a></div>
-            <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/cronometro/')">
-                <img src="img/cronometro.png" alt="">
-                <hr>
-                Cronometro</a></div>
-            <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/FiltroBusqueda/')">
-                <img src="img/buscar.png" alt="">
-                <hr>
-                FiltroBusqueda</a></div>
-            <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/GaleriaAPI/')">
-                <img src="img/g1.png" alt="">
-                <hr>
-                GaleriaAPI</a></div>
-            <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/GaleriaModal/')">
-                <img src="img/g2.png" alt="">
-                <hr>
-                GaleriaModal</a></div>
-            <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/Notas/')">
-                <img src="img/notas.png" alt="">
-                <hr>
-                Notas</a></div>
-            <div class="card">
-                <a href="#" onclick="openModal('https://l21660166.github.io/PiedraPapelTijera/')">
-                    <img src="img/ppt.png" alt="">
-                    <hr>
-                    PiedraPapelTijera
-                </a>
+        <!-- Sección de Inicio -->
+        <div id="home" class="section">
+            <h1 id="titulo-inicio">¡Bienvenido!</h1>
+            <div class="welcome-container" id="inicio-container">
+                <div class="decorative-border"></div>
+                <div class="message-container">
+                    <p id="mensaje-inicio">¡Este es tu punto de inicio hacia grandes cosas! Prepárate para explorar y descubrir nuevas oportunidades. ¡Tu aventura comienza aquí!</p>
+                </div>
             </div>
-            <div class="card">
-                <a href="#" onclick="openModal('https://l21660166.github.io/Suma/')">
-                    <img src="" alt="Suma">
-                    <hr>
-                    Suma
-                </a>
+        </div>
+
+        <!-- Sección de Servicios -->
+        <div id="services" class="section" style="display:none;">
+            <div class="card-container">
+                <!-- Tarjetas para los diferentes servicios -->
+                <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/Calculadora/')">
+                    <img src="img/suma.png" alt="Calculadora">
+                    <br>
+                    Calculadora</a></div>
+                <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/CambioImagen/')">
+                    <img src="img/cambiarImagen.png" alt="Cambio de Imagen">
+                    <br>
+                    CambioImagen</a></div>
+                <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/ContadorPalabras/')">
+                    <img src="img/contadorPalabras.jpg" alt="Contador de Palabras">
+                    <br>
+                    ContadorPalabras</a></div>
+                <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/ContadorArribaAbajo/')">
+                    <img src="img/arribaabajo.png" alt="Contador Arriba Abajo">
+                    <br>
+                    ContadorArribaAbajo</a></div>
+                <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/ConvertidorUnidades/')">
+                    <img src="img/regla.png" alt="Convertidor de Unidades">
+                    <br>
+                    Convertidor</a></div>
+                <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/cronometro/')">
+                    <img src="img/cronometro.png" alt="Cronómetro">
+                    <br>
+                    Cronometro</a></div>
+                <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/FiltroBusqueda/')">
+                    <img src="img/buscar.png" alt="Filtro de Búsqueda">
+                    <br>
+                    FiltroBusqueda</a></div>
+                <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/GaleriaAPI/')">
+                    <img src="img/g1.png" alt="Galería API">
+                    <br>
+                    GaleriaAPI</a></div>
+                <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/GaleriaModal/')">
+                    <img src="img/galeriaModal.png" alt="Galería Modal">
+                    <br>
+                    GaleriaModal</a></div>
+                <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/Notas/')">
+                    <img src="img/notas.png" alt="Notas">
+                    <br>
+                    Notas</a></div>
+                <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/PiedraPapelTijera/')">
+                    <img src="img/ppt.png" alt="Piedra, Papel o Tijera">
+                    <br>
+                    PiedraPapelTijera</a></div>
+                <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/Suma/')">
+                    <img src="img/suma (2).png" alt="Suma">
+                    <br>
+                    Suma</a></div>
+                <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/Temporizador/')">
+                    <img src="img/temporizador.png" alt="Temporizador">
+                    <br>
+                    Temporizador</a></div>
+                <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/ToDoList/')">
+                    <img src="img/list.png" alt="Lista de Tareas">
+                    <br>
+                    To-Do-List</a></div>
+                <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/Act1/')">
+                    <img src="img/mensaje.png" alt="Mensaje">
+                    <br>
+                    Mensaje</a></div>
+                <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/Act2/')">
+                    <img src="img/colores.png" alt="Cambiar Color">
+                    <br>
+                    Cambiar Color</a></div>
+                <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/Act3/')">
+                    <img src="img/formulario.png" alt="Formulario">
+                    <br>
+                    Formulario</a></div>
             </div>
-            <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/Temporizador/')">
-                <img src="img/temporizador.png" alt="">
-                <hr>
-                Temporizador</a></div>
-            <div class="card"><a href="#" onclick="openModal('https://l21660166.github.io/ToDoList/')">
-                <img src="img/list.png" alt="">
-                <hr>
-                To-Do-List</a></div>
+        </div>
+
+        <!-- Sección Sobre Mi -->
+        <div id="about" class="section" style="display:none;">
+            <div class="decorative-border"></div>
+            <div class="message-container">
+                <p id="mensaje-inicio">¡Bienvenido a la sección de Acerca de! Soy Jimena Mendoza, estudiante de Ingeniería en Sistemas Computacionales. Este es un proyecto de la materia de Programación Web, y el tema que estoy abordando es la programación del lado del cliente. A través de este espacio, quiero compartir lo aprendido. ¡Explora y descubre más sobre este proyectos!</p>
+            </div>
+        </div>
+
+        <!-- Sección de Contacto -->
+        <div id="contact" class="section" style="display:none;">
+            <div class="decorative-border"></div>
+            <div class="message-container">
+                <p id="mensaje-inicio">¡Estás en la sección de Contacto! Si deseas ponerte en contacto conmigo, puedes hacerlo a través de las siguientes vías:</p>
+                <ul>
+                    <li>Email: [tu_email@example.com]</li>
+                    <li>Teléfono: [tu número de teléfono]</li>
+                    <li>Redes Sociales: [enlaces a tus perfiles de redes sociales]</li>
+                </ul>
+                <p>¡Espero saber de ti pronto!</p>
+            </div>
         </div>
     </div>
 
+    <!-- Modal para mostrar contenido adicional -->
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
@@ -316,43 +146,12 @@
         </div>
     </div>
 
-    <script>
-        function toggleSidebar() {
-            var sidebar = document.getElementById("sidebar");
-            var mainContent = document.getElementById("main-content");
-            if (sidebar.classList.contains("open")) {
-                sidebar.classList.remove("open");
-                mainContent.style.marginLeft = "60px";
-            } else {
-                sidebar.classList.add("open");
-                mainContent.style.marginLeft = "250px";
-            }
-        }
+    <!-- Barra de pie de página con información de derechos de autor -->
+    <div class="footer-toolbar">
+        <span>© 2021 - Dashboard Responsivo</span>
+    </div>
 
-        function openModal(url) {
-            document.getElementById("modal-iframe").src = url;
-            document.getElementById("myModal").style.display = "block";
-        }
-
-        function closeModal() {
-            document.getElementById("myModal").style.display = "none";
-            document.getElementById("modal-iframe").src = "";
-        }
-
-        window.onclick = function(event) {
-            var modal = document.getElementById("myModal");
-            if (event.target == modal) {
-                modal.style.display = "none";
-                document.getElementById("modal-iframe").src = "";
-            }
-        }
-
-        window.onkeydown = function(event) {
-            if (event.key === "Escape") {
-                closeModal();
-            }
-        }
-    </script>
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <!-- Enlace al archivo JavaScript que maneja la lógica del dashboard -->
+    <script src="script.js"></script> 
 </body>
 </html>
